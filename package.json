@@ -1,0 +1,10 @@
+{
+  "name": "HealthBot",
+  "version": "1.0.0",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  },
+  "devDependencies": {
+    "enmap": "^5.8.4"
+  }
+}
