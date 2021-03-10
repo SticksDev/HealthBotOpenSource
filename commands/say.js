@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fetch = require("node-fetch");
 
 exports.run = (client, message, args) => {
     if(message.author.id === "517495640020746250") {

@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 exports.run = (client, message,args) => {
-    async function DoEval(){
+    async function DoEval() {
         client.clean = async (client, text) => {
             if (text && text.constructor.name == "Promise")
                 text = await text;

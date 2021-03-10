@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-// const doLog = "812748995112992780"
+const db = require('quick.db');
 const casenum = Math.ceil(Math.random() * 100)
 exports.run = (client, message, [mention, ...reason]) => {
     const PermsDeined = new Discord.MessageEmbed()
@@ -10,7 +10,7 @@ exports.run = (client, message, [mention, ...reason]) => {
     const BackToHelp = new Discord.MessageEmbed()
         .setTitle("Help | Kick Command")
         .setColor(0x00AE86)
-        .setDescription("**?kick reason user** | Kicks a user")
+        .setDescription("**kick reason user** | Kicks a user")
         .setTimestamp()
     if (message.mentions.members.size === 0)
         return message.reply(BackToHelp);
@@ -20,18 +20,20 @@ exports.run = (client, message, [mention, ...reason]) => {
 
     const kickMember = message.mentions.members.first();
 
+
     kickMember.kick(reason.join(" ")).then(member => {
         message.reply("User was kicked.");
-        const PostLog = new Discord.MessageEmbed()
-            .setTitle("ModAction | Kick")
-            .setColor(0x00AE86)
-            .addFields(
-                { name: 'Moderator:', value: message.author.username, inline: true },
-                { name: 'User who was kicked:', value: kickMember, inline: true },
-                { name: 'Reason:', value: reason, inline: true },
-                { name: 'Case:', value: casenum, inline: true }
-            )
-            .setTimestamp()
-        // client.channels.cache.get(doLog).send(PostLog)
+        const res = db.all()
+            .filter(c => c.ID.startsWith(`LOGCHANNEL_${message.guild.id}`))
+        if(res) {
+            try {
+                console.log(res[2].split('_')[2])
+              //  client.channels.cache.get("819224230151192606").send(PostLog)
+            } catch(err) {
+                message.channel.send("Could not access or send to the logs channel. Make sure you have one setup by using >setlogchannel (channelid)")
+                client.channels.cache.get("819224230151192606").send("Error Sending to log channel: " + err + " On guild " + message.guild.name + ".")
+                console.log(err)
+            }
+        }
     });
 };
