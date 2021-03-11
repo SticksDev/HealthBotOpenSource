@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
             messagetosend.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
             let healthembed = new Discord.MessageEmbed()
             .setTitle("Health Help Menu")
-            .setDescription(">hotlines (Lists the hotlines for || suicide prevention ||")
+            .setDescription(">hotlines (Lists the hotlines for || suicide prevention ||)")
             .setTimestamp()
             .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
 			messagetosend.edit(healthembed);
