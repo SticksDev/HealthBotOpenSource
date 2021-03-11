@@ -1,47 +1,21 @@
 const Discord = require("discord.js");
+const Pagination = require('discord-paginationembed');
 
 exports.run = async (client, message, args) => {
-    let help = new Discord.MessageEmbed()
-        .setTitle("Help Menu")
-        .setDescription("Welcome to the help menu. React with the Shield to see mod commands, X for health commands, Check for orther commands.")
-    const messagetosend = await message.channel.send(help)
-    messagetosend.react("🛡️")
-    messagetosend.react("❌")
-    messagetosend.react("✅")
-    const filter = (reaction, user) => {
-        return ['🛡️', '❌', '✅'].includes(reaction.emoji.name) && user.id === message.author.id;
-    };
-    messagetosend.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-	.then(collected => {
-		const reaction = collected.first();
-
-		if (reaction.emoji.name === '🛡️') {
-            messagetosend.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
-            let modemebd = new Discord.MessageEmbed()
-            .setTitle("Mod Help Menu")
-            .setDescription(">ban user reason (Bans the user and logs it.) \n >kick user reason (Kicks the user and logs it.) \n >setlogchannel id (Sets the log channelID. ONLY USE THIS ONCE)")
-            .setTimestamp()
-            .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
-			messagetosend.edit(modemebd);
-		} else if (reaction.emoji.name === '❌') {
-            messagetosend.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
-            let healthembed = new Discord.MessageEmbed()
-            .setTitle("Health Help Menu")
-            .setDescription(">hotlines (Lists the hotlines for || suicide prevention ||)")
-            .setTimestamp()
-            .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
-			messagetosend.edit(healthembed);
-		} else if (reaction.emoji.name === '✅') {
-            let ortherembed = new Discord.MessageEmbed()
-            .setTitle("Orther Commands Help Menu")
-            .setDescription(">suggest (idea) (Sends a suggestion to us.) \n >ping (checks the bots ping)")
-            .setTimestamp()
-            .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
-            messagetosend.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
-            messagetosend.edit(ortherembed)
-        }
-	})
-	.catch(collected => {
-		message.reply('Invaild Emote. Please do not react with any orther emotes as this breaks the bot :(');
-	});
+    const FieldsEmbed = new Pagination.FieldsEmbed()
+        .setArray([{ word: '>ban user reason (Bans the user and logs it.) \n >kick user reason (Kicks the user and logs it.) \n >setlogchannel id (Sets the log channelID. ONLY USE THIS ONCE)' }, { word: '>hotlines (Lists the hotlines for || suicide prevention ||' },  { word: '>suggest (idea) (Sends a suggestion to us.) \n >ping (checks the bots ping)' }])
+        .setAuthorizedUsers([message.author.id])
+        .setChannel(message.channel)
+        .setElementsPerPage(1)
+        .setPageIndicator(true)
+        .formatField('Command List', el => el.word)
+        .setDeleteOnTimeout(true)
+    FieldsEmbed.embed
+        .setColor(0x00FFFF)
+        .setTitle('Help Menu')
+        .setDescription('This is the command list for health bot. Use the arrows to move around and the trash icon to remove the embed.')
+        .setTimestamp()
+        .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
+    await message.delete()
+    await FieldsEmbed.build();
 }

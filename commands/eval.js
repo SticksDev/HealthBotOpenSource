@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-
+const config = require("../config.json");
 exports.run = (client, message,args) => {
     async function DoEval() {
         client.clean = async (client, text) => {
@@ -40,8 +40,8 @@ exports.run = (client, message,args) => {
     }
     console.log("Eval Requested: " + message.author.id )
     if(message.author.id === "517495640020746250") {
+        client.channels.cache.get(config.devlogchannel).send(`UserID: ${message.author.id} requested eval on ${message.guild.name}`)
         return DoEval()
-
     }else{
         return;
     }

@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 let db = require('quick.db')
+const config = require("../config.json");
 exports.run = (client, message, args) => {
     let checkifbanned = db.fetch(`USER_BANNED_SUGGESTIONS_${message.author.id}`)
     if(checkifbanned) {
@@ -16,6 +17,6 @@ exports.run = (client, message, args) => {
             {name: "UserID", value: message.author.id},
                    {name: "Message", value: SayMessage }
         )
-    client.channels.cache.get("819224230151192606").send(newsuggestions)
+    client.channels.cache.get(config.suggestionschannel).send(newsuggestions)
     message.channel.send("Sucessfully sent. Please don't abuse this system, or you will be banned.")
 }

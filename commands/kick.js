@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const db = require('quick.db');
 const casenum = Math.ceil(Math.random() * 100)
+const config = require("../config.json");
 exports.run = (client, message, [mention, ...reason]) => {
     const PermsDeined = new Discord.MessageEmbed()
         .setTitle("You can't do that!")
@@ -40,7 +41,7 @@ exports.run = (client, message, [mention, ...reason]) => {
               client.channels.cache.get(res[0].ID.split('_')[2]).send(PostLog)
             } catch(err) {
                 message.channel.send("Could not access or send to the logs channel. Make sure you have one setup by using >setlogchannel (channelid)")
-                client.channels.cache.get("819224230151192606").send("Error Sending to log channel: " + err + " On guild " + message.guild.name + ".")
+                client.channels.cache.get(config.devlogchannel).send("Error Sending to log channel: " + err + " On guild " + message.guild.name + ".")
                 console.log(err)
             }
         }
