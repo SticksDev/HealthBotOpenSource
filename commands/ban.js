@@ -33,6 +33,16 @@ exports.run = (client, message, [mention, ...reason]) => {
                 { name: 'Case:', value: casenum, inline: true }
             )
             .setTimestamp()
-        // client.channels.cache.get(doLog).send(PostLog)
+        const res = db.all()
+            .filter(c => c.ID.startsWith(`LOGCHANNEL_${message.guild.id}`))
+        if(res) {
+            try {
+              client.channels.cache.get(res[0].ID.split('_')[2]).send(PostLog)
+            } catch(err) {
+                message.channel.send("Could not access or send to the logs channel. Make sure you have one setup by using >setlogchannel (channelid)")
+                client.channels.cache.get("819224230151192606").send("Error Sending to log channel: " + err + " On guild " + message.guild.name + ".")
+                console.log(err)
+            }
+        }
     });
 };
