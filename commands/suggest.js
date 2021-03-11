@@ -5,6 +5,9 @@ exports.run = (client, message, args) => {
     if(checkifbanned) {
         return message.channel.send("You are banned from the suggestions system.")
     }
+    if(args.length === 0) {
+        return message.channel.send("Please enter an suggestion.")
+    }
     const SayMessage = message.content.slice(8).trim();
     let newsuggestions = new Discord.MessageEmbed()
         .setTitle("New Suggestion.")
