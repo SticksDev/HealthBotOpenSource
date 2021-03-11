@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-// const doLog = "812748995112992780"
+const db = require('quick.db');
 const casenum = Math.ceil(Math.random() * 100)
 exports.run = (client, message, [mention, ...reason]) => {
     const PermsDeined = new Discord.MessageEmbed()
