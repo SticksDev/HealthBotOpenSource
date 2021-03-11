@@ -22,13 +22,22 @@ exports.run = (client, message, [mention, ...reason]) => {
 
 
     kickMember.kick(reason.join(" ")).then(member => {
+        const PostLog = new Discord.MessageEmbed()
+            .setTitle("ModAction | Kick")
+            .setColor(0x00AE86)
+            .addFields(
+                { name: 'Moderator:', value: message.author.username, inline: true },
+                { name: 'User who was kicked:', value: kickMember, inline: true },
+                { name: 'Reason:', value: reason, inline: true },
+                { name: 'Case:', value: casenum, inline: true }
+            )
+            .setTimestamp()
         message.reply("User was kicked.");
         const res = db.all()
             .filter(c => c.ID.startsWith(`LOGCHANNEL_${message.guild.id}`))
         if(res) {
             try {
-                console.log(res[2].split('_')[2])
-              //  client.channels.cache.get("819224230151192606").send(PostLog)
+              client.channels.cache.get(res[0].ID.split('_')[2]).send(PostLog)
             } catch(err) {
                 message.channel.send("Could not access or send to the logs channel. Make sure you have one setup by using >setlogchannel (channelid)")
                 client.channels.cache.get("819224230151192606").send("Error Sending to log channel: " + err + " On guild " + message.guild.name + ".")
