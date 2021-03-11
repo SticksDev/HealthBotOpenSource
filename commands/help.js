@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
             .setDescription(">hotlines (Lists the hotlines for || suicide prevention ||")
             .setTimestamp()
             .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
-			messagetosend.edit('');
+			messagetosend.edit(healthembed);
 		} else if (reaction.emoji.name === '✅') {
             let ortherembed = new Discord.MessageEmbed()
             .setTitle("Orther Commands Help Menu")
@@ -38,7 +38,7 @@ exports.run = async (client, message, args) => {
             .setTimestamp()
             .setFooter("See a command that's not on here, and you want it to be added to the bot? Run >suggest (idea) to tell us!")
             messagetosend.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
-            messagetosend.edit("")
+            messagetosend.edit(ortherembed)
         }
 	})
 	.catch(collected => {
