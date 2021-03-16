@@ -8,6 +8,7 @@ exports.run = (client, message, args) => {
     let rsp = new Discord.MessageEmbed()
         .setTitle("Message from system")
         .setDescription(SayMessage)
+        .setFooter("Sent by: " + message.author.username + " | From server: " + message.guild.name)
     if(message.author.id === "517495640020746250") {
         try {
             client.users.cache.get(args[0]).send(rsp)

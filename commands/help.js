@@ -3,7 +3,7 @@ const Pagination = require('discord-paginationembed');
 
 exports.run = async (client, message, args) => {
     const FieldsEmbed = new Pagination.FieldsEmbed()
-        .setArray([{ word: '>ban user reason (Bans the user and logs it.) \n >kick user reason (Kicks the user and logs it.) \n >setlogchannel id (Sets the log channelID. ONLY USE THIS ONCE)' }, { word: '>hotlines (Lists the hotlines for || suicide prevention ||) \n >aww (gets a picture from r/aww)' },  { word: '>suggest (idea) (Sends a suggestion to us.) \n >ping (checks the bots ping)' }])
+        .setArray([{ word: '>ban user reason (Bans the user and logs it.) \n >kick user reason (Kicks the user and logs it.) \n >setlogchannel id (Sets the log channelID. ONLY USE THIS ONCE)' }, { word: '>hotlines (Lists the hotlines for || suicide prevention ||) \n >aww (gets a picture from r/aww)'}, { word:'\n >claim (claims the ticket) \n >close (closes a ticket) \n >open (opens a ticket)' },  { word: '>suggest (idea) (Sends a suggestion to us.) \n >ping (checks the bots ping)' }])
         .setAuthorizedUsers([message.author.id])
         .setChannel(message.channel)
         .setElementsPerPage(1)
